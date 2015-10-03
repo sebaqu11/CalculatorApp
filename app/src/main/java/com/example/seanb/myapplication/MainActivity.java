@@ -18,43 +18,58 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    ArrayList<String> arrayList = new ArrayList<String>();
+    ArrayList<String> arrayList = new ArrayList<String>();  // create array list
     String string = "";
     String string1 = "";
 
+    // two text views are used, textView1 which shows the result after inputs and textView2, which
+    // shows the numbers that are being inputted
+    // onClick1 is the method that will handle all button mappings for buttons {0-9,+,-,/,*,.,}
+    // (all buttons except =)
     public void onClick1(View v){
 
         TextView textView2 = (TextView) findViewById(R.id.textView2);
         Button button = (Button) v;
-        string = (String) button.getText().toString();
+        string = (String) button.getText().toString();  // map values to string
 
+        // as soon as an operator is entered, it gets it's own value in the array
+        // eg. if I enter the numbers 567 and then "+", the "+" gets it's own index in the array while
+        // 567 stays as one value in the array. (567 has index 0, while + has index 1)
         if(!string.contains("+") && !string.contains("-") && !string.contains("*") && !string.contains("/")) {
             string1 = string1 + string;
 
             if (arrayList.size()>0) {
-                arrayList.remove((arrayList.size()-1));
+                arrayList.remove((arrayList.size()-1)); // remove the index of last entered value
 
             }
-            arrayList.add(string1);
+            arrayList.add(string1); // add current string to array
         }
         else {
-            arrayList.add(string);
-            arrayList.add(string);
-            string1="";
+            arrayList.add(string); // because we remove the last entered symbol
+            arrayList.add(string); // we add it twice, so one remains.
+            string1="";            // clear string value to null
+                                   // entering "+" gives us {+, +}
+                                   // then entering a digit replaces the 2nd "+" with that digit
         }
-        textView2.setText(textView2.getText().toString()+string);
-        //textView2.setText(arrayList.toString());
+        textView2.setText(textView2.getText().toString()+string); // input gets printed on textView2
+
     }
 
+    // method onClick1 handles the calculations between values entered by onClick1.  Basically it
+    // handles the "=".
     public void onClick (View v) {
+
+        // textView1 is the final value
         TextView textView1 = (TextView) findViewById(R.id.textView);
 
-        int calc = 0;
+        int calc = 0; // default value
         int c = arrayList.size();
 
-        // if the array has the values {2, +, 3, *, 4, -, 3}, size  = 7,
+        // if the array has the values {2, +, 3, *, 4, -, 3}, size  = 7
         while (c != 1) {
             if (c > 3) {
+                // index 3 is the 2nd operator
+                // index 4 is the 3rd digit
                 if (arrayList.get(3).contains("*") || arrayList.get(3).contains("/")) {
                     if (arrayList.get(3).contains("*")) {
                         calc = Integer.parseInt(arrayList.get(2)) * Integer.parseInt(arrayList.get(4));
@@ -94,16 +109,19 @@ public class MainActivity extends AppCompatActivity {
             }
             // size <= 3
             else {
-                if (arrayList.get(1).contains("+")) {
+                // index 0 will be the first digit
+                // index 1 will be the 1st operator
+                // index 2 is the 2nd digit
+                if (arrayList.get(1).contains("+")) {   // sum first and second digit
                     calc = Integer.parseInt(arrayList.get(0)) + Integer.parseInt(arrayList.get(2));
                 }
-                if (arrayList.get(1).contains("-")) {
+                if (arrayList.get(1).contains("-")) {   // subtract
                     calc = Integer.parseInt(arrayList.get(0)) - Integer.parseInt(arrayList.get(2));
                 }
-                if (arrayList.get(1).contains("*")) {
+                if (arrayList.get(1).contains("*")) {   // multiply
                     calc = Integer.parseInt(arrayList.get(0)) * Integer.parseInt(arrayList.get(2));
                 }
-                if (arrayList.get(1).contains("/")) {
+                if (arrayList.get(1).contains("/")) {   // divide
                     calc = Integer.parseInt(arrayList.get(0)) / Integer.parseInt(arrayList.get(2));
                 }
                 // calc value = 11
@@ -118,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         textView1.setText(Integer.toString(calc));
     }
 
+    // method that maps to the clear button
     public void clear (View v) {
         TextView textView1 = (TextView)findViewById(R.id.textView);
         TextView textView2 = (TextView)findViewById(R.id.textView2);
