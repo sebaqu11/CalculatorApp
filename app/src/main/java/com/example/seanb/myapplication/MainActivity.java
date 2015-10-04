@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
     // two text views are used, textView1 which shows the result after inputs and textView2, which
     // shows the numbers that are being inputted
-    // onClick1 is the method that will handle all button mappings for buttons {0-9,+,-,/,*,.,}
+    // onClick2 is the method that will handle all button mappings for buttons {0-9,+,-,/,*,.,}
     // (all buttons except =)
-    public void onClick1(View v){
+    public void onClick2(View v){
 
         TextView textView2 = (TextView) findViewById(R.id.textView2);
         Button button = (Button) v;
@@ -55,14 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // method onClick1 handles the calculations between values entered by onClick1.  Basically it
+    // method onClick2 handles the calculations between values entered by onClick2.  Basically it
     // handles the "=".
-    public void onClick (View v) {
+    public void onClick1 (View v) {
 
         // textView1 is the final value
         TextView textView1 = (TextView) findViewById(R.id.textView);
 
-        int calc = 0; // default value
+        float calcValue = 0; // default value
         int c = arrayList.size();
 
         // if the array has the values {2, +, 3, *, 4, -, 3}, size  = 7
@@ -72,38 +72,38 @@ public class MainActivity extends AppCompatActivity {
                 // index 4 is the 3rd digit
                 if (arrayList.get(3).contains("*") || arrayList.get(3).contains("/")) {
                     if (arrayList.get(3).contains("*")) {
-                        calc = Integer.parseInt(arrayList.get(2)) * Integer.parseInt(arrayList.get(4));
+                        calcValue = Float.parseFloat(arrayList.get(2)) * Float.parseFloat(arrayList.get(4));
                     }
                     if (arrayList.get(3).contains("/")) {
-                        calc = Integer.parseInt(arrayList.get(2)) * Integer.parseInt(arrayList.get(4));
+                        calcValue = Float.parseFloat(arrayList.get(2)) * Float.parseFloat(arrayList.get(4));
                     }
                     // calc value = 12, array = {2, +, 3, *, 4, -, 3}
                     arrayList.remove(2);    // {2, +, *, 4, -, 3}
                     arrayList.remove(2);    // {2, +, 4, -, 3}
                     arrayList.remove(2);    // {2, +, -, 3}
-                    arrayList.add(2, Integer.toString(calc)); // {2, +, 12, -, 3}
+                    arrayList.add(2, Float.toString(calcValue)); // {2, +, 12, -, 3}
                     c = arrayList.size();  // size = 5
                 }
                 else {
                     // {2, +, 12, -, 3}
                     if (arrayList.get(1).contains("+")) {
-                        calc = Integer.parseInt(arrayList.get(0)) + Integer.parseInt(arrayList.get(2));
+                        calcValue = Float.parseFloat(arrayList.get(0)) + Float.parseFloat(arrayList.get(2));
                     }
                     if (arrayList.get(1).contains("-")) {
-                        calc = Integer.parseInt(arrayList.get(0)) - Integer.parseInt(arrayList.get(2));
+                        calcValue = Float.parseFloat(arrayList.get(0)) - Float.parseFloat(arrayList.get(2));
                     }
                     if (arrayList.get(1).contains("*")) {
-                        calc = Integer.parseInt(arrayList.get(0)) * Integer.parseInt(arrayList.get(2));
+                        calcValue = Float.parseFloat(arrayList.get(0)) * Float.parseFloat(arrayList.get(2));
                     }
                     if (arrayList.get(1).contains("/")) {
-                        calc = Integer.parseInt(arrayList.get(0)) / Integer.parseInt(arrayList.get(2));
+                        calcValue = Float.parseFloat(arrayList.get(0)) / Float.parseFloat(arrayList.get(2));
                     }
 
                     // calc value = 14
                     arrayList.remove(0);    // {+, 12, -, 3}
                     arrayList.remove(0);    // {12, -, 3}
                     arrayList.remove(0);    // {-, 3}
-                    arrayList.add(0, Integer.toString(calc));  // {14, -, 3}
+                    arrayList.add(0, Float.toString(calcValue));  // {14, -, 3}
                     c = arrayList.size();   // size = 3
                 }
             }
@@ -113,27 +113,27 @@ public class MainActivity extends AppCompatActivity {
                 // index 1 will be the 1st operator
                 // index 2 is the 2nd digit
                 if (arrayList.get(1).contains("+")) {   // sum first and second digit
-                    calc = Integer.parseInt(arrayList.get(0)) + Integer.parseInt(arrayList.get(2));
+                    calcValue = Float.parseFloat(arrayList.get(0)) + Float.parseFloat(arrayList.get(2));
                 }
                 if (arrayList.get(1).contains("-")) {   // subtract
-                    calc = Integer.parseInt(arrayList.get(0)) - Integer.parseInt(arrayList.get(2));
+                    calcValue = Float.parseFloat(arrayList.get(0)) - Float.parseFloat(arrayList.get(2));
                 }
                 if (arrayList.get(1).contains("*")) {   // multiply
-                    calc = Integer.parseInt(arrayList.get(0)) * Integer.parseInt(arrayList.get(2));
+                    calcValue = Float.parseFloat(arrayList.get(0)) * Float.parseFloat(arrayList.get(2));
                 }
                 if (arrayList.get(1).contains("/")) {   // divide
-                    calc = Integer.parseInt(arrayList.get(0)) / Integer.parseInt(arrayList.get(2));
+                    calcValue = Float.parseFloat(arrayList.get(0)) / Float.parseFloat(arrayList.get(2));
                 }
                 // calc value = 11
                 arrayList.remove(0);    // {-, 3}
                 arrayList.remove(0);    // {3}
                 arrayList.remove(0);    // ()
-                arrayList.add(0, Integer.toString(calc));   // {9}
+                arrayList.add(0, Float.toString(calcValue));   // {9}
                 c = arrayList.size();   //  size = 1
                 // when size = 1, loop ends
             }
         }
-        textView1.setText(Integer.toString(calc));
+        textView1.setText(Float.toString(calcValue));
     }
 
     // method that maps to the clear button
